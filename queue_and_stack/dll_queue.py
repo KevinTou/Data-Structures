@@ -164,10 +164,9 @@ class Queue:
     def enqueue(self, value):
         if self.size == 0:
             self.storage.add_to_head(value)
-            self.size += 1
         else:
             self.storage.add_to_tail(value)
-            self.size += 1
+        self.size += 1
 
     def dequeue(self):
         if self.size == 0:
