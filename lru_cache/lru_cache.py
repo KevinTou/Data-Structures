@@ -179,12 +179,16 @@ class LRUCache:
     """
 
     def get(self, key):
+        # Check if key is in cache
         if key in self.cache.keys():
+            # The cache is holding a reference to the node
             node = self.cache[key]
+            # Move the node to the head because it's being accessed, or "used"
             self.list.move_to_front(node)
-            print("getting: ", node.value[1])
+            # Return the value of the node: Tuple ('key', 'value')
             return node.value[1]
         else:
+            # If the key doesn't exist in the cache, return None
             return None
 
     """
@@ -199,15 +203,23 @@ class LRUCache:
     """
 
     def set(self, key, value):
+        # Check if key is in cache
         if key in self.cache.keys():
+            # The cache is holding a reference to the node
             node = self.cache[key]
+            # Update the existing node's value
             node.value = (key, value)
+            # Move the node to the head because it's being accessed, or "used"
             self.list.move_to_front(node)
         else:
-            if self.list.length == self.limit:
+            # Check to see if the limit is reached
+            if self.size == self.limit:
+                # Delete the oldest from the cache
                 del self.cache[self.list.remove_from_tail()[0]]
                 self.size -= 1
+            # Add the new node to the head
             node = (key, value)
             self.list.add_to_head(node)
+            # Set the cache to reference the node
             self.cache[key] = self.list.head
             self.size += 1
