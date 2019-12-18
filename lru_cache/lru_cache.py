@@ -182,6 +182,7 @@ class LRUCache:
         if key in self.cache.keys():
             node = self.cache[key]
             self.list.move_to_front(node)
+            print("getting: ", node.value[1])
             return node.value[1]
         else:
             return None
@@ -198,19 +199,14 @@ class LRUCache:
     """
 
     def set(self, key, value):
-        if self.size < self.limit:
-            if key in self.cache.keys():
-                node = self.cache[key]
-                node.value = (key, value)
-                self.list.move_to_front(node)
-            else:
-                node = (key, value)
-                self.list.add_to_head(node)
-                self.cache[key] = self.list.head
-                self.size += 1
+        if key in self.cache.keys():
+            node = self.cache[key]
+            node.value = (key, value)
+            self.list.move_to_front(node)
         else:
-            del self.cache[self.list.remove_from_tail()[0]]
-            self.size -= 1
+            if self.list.length == self.limit:
+                del self.cache[self.list.remove_from_tail()[0]]
+                self.size -= 1
             node = (key, value)
             self.list.add_to_head(node)
             self.cache[key] = self.list.head
