@@ -213,26 +213,37 @@ class BinarySearchTree:
             if self.left == None:
                 self.left = BinarySearchTree(value)
             else:
-                self.left.insert(value)
+                return self.left.insert(value)
         elif value >= self.value:
             if self.right == None:
                 self.right = BinarySearchTree(value)
             else:
-                self.right.insert(value)
+                return self.right.insert(value)
 
         # Return True if the tree contains the value
         # False if it does not
     def contains(self, target):
         # if target == self.value, return it
         # go left or right based on smaller or bigger
-        pass
+        if target == self.value:
+            return True
+        elif target < self.value:
+            if self.left is not None:
+                return self.left.contains(target)
+            else:
+                return False
+        elif target >= self.value:
+            if self.right is not None:
+                return self.right.contains(target)
+            else:
+                return False
 
     # Return the maximum value found in the tree
     def get_max(self):
         # if right exists, go right
         # otherwise return self.value
-        if self.right:
-            self.right.get_max()
+        if self.right is not None:
+            return self.right.get_max()
         else:
             return self.value
 
