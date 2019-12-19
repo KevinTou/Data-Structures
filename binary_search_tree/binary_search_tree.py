@@ -284,21 +284,31 @@ class BinarySearchTree:
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        queue = Queue()
+        queue.enqueue(self)
+
+        while queue.len() > 0:
+            current_node = queue.dequeue()
+            print(current_node.value)
+            if current_node.left:
+                queue.enqueue(current_node.left)
+            if current_node.right:
+                queue.enqueue(current_node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
+
     def dft_print(self, node):
         stack = Stack()
         stack.push(self)
 
         while stack.len() > 0:
             current_node = stack.pop()
-            if current_node.right:
-                stack.push(current_node.right)
+            print(current_node.value)
             if current_node.left:
                 stack.push(current_node.left)
-            print(current_node.value)
+            if current_node.right:
+                stack.push(current_node.right)
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
@@ -309,15 +319,3 @@ class BinarySearchTree:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
         pass
-
-
-# bst = BinarySearchTree(1)
-# bst.insert(8)
-# bst.insert(5)
-# bst.insert(7)
-# bst.insert(6)
-# bst.insert(3)
-# bst.insert(4)
-# bst.insert(2)
-
-# bst.dft_print(bst)
